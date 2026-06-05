@@ -229,15 +229,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div
-      style={{
-        background: "#0e0e10",
-        minHeight: "100vh",
-        color: "#e8e8f0",
-        fontFamily: "IBM Plex Sans, sans-serif",
-        position: "relative",
-      }}
-    >
+    <>
       <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
         {/* Header */}
         <div
@@ -259,12 +251,18 @@ export default function ProjectsPage() {
                 letterSpacing: ".12em",
                 textTransform: "uppercase",
                 marginBottom: 6,
+                textAlign: "left",
               }}
             >
               // projects
             </div>
             <div
-              style={{ fontSize: 26, fontWeight: 500, letterSpacing: "-.02em" }}
+              style={{
+                fontSize: 26,
+                fontWeight: 500,
+                letterSpacing: "-.02em",
+                textAlign: "left",
+              }}
             >
               Your sidepieces
             </div>
@@ -435,6 +433,6 @@ export default function ProjectsPage() {
           onAdd={handleAdd}
         />
       )}
-    </div>
+    </>
   );
 }

@@ -1,13 +1,12 @@
-import { useState } from "react";
-import logo from "./assets/images/logo-universal.png";
 import "./App.css";
-import ProjectsPage from "./pages/ProjectPage";
+import { Outlet } from "react-router";
+import Layout from "./Layout";
 
 function App() {
   return (
-    <div className="App">
-      <ProjectsPage />
-    </div>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 }
 

@@ -47,3 +47,19 @@ func (a *App) DeleteProject(id int64) error {
 func (a *App) UpdateProjectStatus(id int64, status string) error {
     return db.UpdateStatus(a.db, id, status)
 }
+
+
+func (a *App) GetAllPersonas() ([]models.Persona,error) {
+    return db.GetAllPersona(a.db)
+}
+
+func (a *App) AddPersona(name string, gender string) (int64, error) {
+    return db.AddPersona(a.db, models.Persona{
+        Name:   name,
+        Gender: gender,
+    })
+}
+
+func (a *App) DeletePersona(id int64) error {
+    return db.DeletePersona(a.db, id)
+}
