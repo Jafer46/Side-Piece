@@ -14,6 +14,8 @@ const inputStyle = {
   outline: "none",
 };
 
+const PersonaColors = ["#7b8cde", "#e8a0bf", "#a0d4b5"];
+
 export default function AddPersonaModal({
   onClose,
   onAdd,
@@ -23,6 +25,9 @@ export default function AddPersonaModal({
 }) {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
+  const [color, setColor] = useState(PersonaColors[0]);
+  const [emoji, setEmoji] = useState("");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -98,6 +103,43 @@ export default function AddPersonaModal({
             onChange={(e) => setGender(e.target.value)}
             placeholder="Female"
             style={inputStyle}
+          />
+        </FormField>
+        <FormField label="Persona Color">
+          <select
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            style={inputStyle}
+          >
+            {PersonaColors.map((c) => (
+              <option key={c} value={c} style={{ display: "flex" }}>
+                <div
+                  style={{ width: "8px", height: "3px", backgroundColor: c }}
+                ></div>
+                {c}
+              </option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label="Persona Emoji">
+          <input
+            value={emoji}
+            onChange={(e) => setEmoji(e.target.value)}
+            placeholder="👩"
+            style={inputStyle}
+          />
+        </FormField>
+        <FormField label="Persona Description">
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="A very nagging wife."
+            style={{
+              ...inputStyle,
+              height: 80,
+              resize: "none",
+              padding: "12px 12px 12px 12px",
+            }}
           />
         </FormField>
 

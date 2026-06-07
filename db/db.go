@@ -25,6 +25,9 @@ func migrate(db *sqlx.DB) error {
 		id          INTEGER PRIMARY KEY AUTOINCREMENT,
 		name        TEXT NOT NULL,
 		gender      TEXT NOT NULL,
+        color       TEXT NOT NULL,
+        emoji       TEXT NOT NULL,
+        description TEXT,
 		created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 
 	);

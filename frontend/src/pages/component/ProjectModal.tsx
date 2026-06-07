@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { AddProject } from "../../../wailsjs/go/main/App";
+import { useEffect, useState } from "react";
+import { AddProject, GetAllPersonas } from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
+import { models } from "../../../wailsjs/go/models";
 
 const inputStyle = {
   width: "100%",
@@ -48,8 +49,17 @@ export default function AddProjectModal({
   const [personaId, setCharacter] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [personas, setPersonas] = useState<models.Persona[]>([]);
+  const [loadingPersonas, setLoadingPersonas] = useState(false);
+
+  useEffect(() => {
+    setLoadingPersonas(true);
+    GetAllPersonas().then(setPersonas).catch(console.error);
+    setLoadingPersonas(false);
+  }, []);
 
   async function handleSave() {
+    if (loadingPersonas) return;
     if (!name.trim() || !path.trim()) {
       setError("Name and path are required.");
       return;
@@ -150,37 +160,38 @@ export default function AddProjectModal({
               marginTop: 6,
             }}
           >
-            {Object.entries(CHAR_CONFIG).map(([key, cfg]) => (
-              <div
-                key={key}
-                onClick={() => setCharacter(Number(key))}
-                style={{
-                  border: `0.5px solid ${personaId === Number(key) ? cfg.color : "#2e2e38"}`,
-                  borderRadius: 6,
-                  padding: "10px 8px",
-                  textAlign: "center",
-                  cursor: "pointer",
-                  background:
-                    personaId === Number(key) ? `${cfg.color}18` : "#1e1e24",
-                  transition: "all .15s",
-                }}
-              >
-                <div style={{ fontSize: 18 }}>{cfg.emoji}</div>
+            {personas.length > 0 &&
+              personas.map(({ ID: key, ...cfg }) => (
                 <div
+                  key={key}
+                  onClick={() => setCharacter(Number(key))}
                   style={{
-                    fontFamily: "IBM Plex Mono, monospace",
-                    fontSize: 11,
-                    color: "#e8e8f0",
-                    marginTop: 4,
+                    border: `0.5px solid ${personaId === Number(key) ? cfg.Color : "#2e2e38"}`,
+                    borderRadius: 6,
+                    padding: "10px 8px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                    background:
+                      personaId === Number(key) ? `${cfg.Color}18` : "#1e1e24",
+                    transition: "all .15s",
                   }}
                 >
-                  {cfg.label}
+                  <div style={{ fontSize: 18 }}>{cfg.Emoji}</div>
+                  <div
+                    style={{
+                      fontFamily: "IBM Plex Mono, monospace",
+                      fontSize: 11,
+                      color: "#e8e8f0",
+                      marginTop: 4,
+                    }}
+                  >
+                    {cfg.Name}
+                  </div>
+                  <div style={{ fontSize: 10, color: "#5a5a72", marginTop: 2 }}>
+                    {cfg.Description}
+                  </div>
                 </div>
-                <div style={{ fontSize: 10, color: "#5a5a72", marginTop: 2 }}>
-                  {cfg.desc}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </FormField>
 

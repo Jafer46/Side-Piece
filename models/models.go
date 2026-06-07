@@ -15,10 +15,13 @@ type Project struct {
 }
 
 type Persona struct {
-	ID        int64     `db:"id"`
-	Name      string    `db:"name"`
-	Gender string    `db:"gender"`
-	CreatedAt time.Time `db:"created_at"`
+	ID          int64     `db:"id"`
+	Name        string    `db:"name"`
+	Gender 	    string    `db:"gender"`
+	Color       string    `db:"color"`
+	Emoji       string    `db:"emoji"`
+	Description string    `db:"description"`
+	CreatedAt   time.Time `db:"created_at"`
 }
 
 type PersonaMessages struct {

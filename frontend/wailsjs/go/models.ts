@@ -4,6 +4,9 @@ export namespace models {
 	    ID: number;
 	    Name: string;
 	    Gender: string;
+	    Color: string;
+	    Emoji: string;
+	    Description: string;
 	    // Go type: time
 	    CreatedAt: any;
 	
@@ -16,6 +19,9 @@ export namespace models {
 	        this.ID = source["ID"];
 	        this.Name = source["Name"];
 	        this.Gender = source["Gender"];
+	        this.Color = source["Color"];
+	        this.Emoji = source["Emoji"];
+	        this.Description = source["Description"];
 	        this.CreatedAt = this.convertValues(source["CreatedAt"], null);
 	    }
 	
