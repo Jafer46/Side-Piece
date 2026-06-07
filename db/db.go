@@ -67,6 +67,24 @@ func migrate(db *sqlx.DB) error {
         status      TEXT NOT NULL,
         ran_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS project_commits (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_id  INTEGER NOT NULL REFERENCES projects(id),
+        commit_type TEXT NOT NULL,
+        branch      TEXT,
+        message     TEXT NOT NULL,
+        created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS discovered_repos (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        path         TEXT NOT NULL UNIQUE,
+        name         TEXT NOT NULL,
+        branch       TEXT,
+        last_commit  TEXT,
+        created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
     `
     _, err := db.Exec(schema)
     return err

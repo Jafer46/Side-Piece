@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"side_piece/db"
+	"side_piece/git"
 	"side_piece/models"
 
 	"github.com/jmoiron/sqlx"
@@ -62,4 +63,27 @@ func (a *App) AddPersona(name string, gender string) (int64, error) {
 
 func (a *App) DeletePersona(id int64) error {
     return db.DeletePersona(a.db, id)
+}
+
+func (a *App) ScanAndCache() ([]git.ScanResult, error) {
+    results, err := git.ScanForRepos()
+    if err != nil {
+        return nil, err
+    }
+
+    // Wipe old cache and store fresh results
+    // a.db.Exec(`DELETE FROM discovered_repos`)
+    for _, r := range results {
+        _, error := db.AddRepo(a.db, models.DiscoveredRepos{
+            Name:      r.Name,
+            Path:      r.Path,
+            Branch:    r.Branch,
+            LastCommit: r.LastCommit,
+        })
+        if error != nil {
+            continue
+        }
+    }
+
+    return results, nil
 }

@@ -14,6 +14,15 @@ type Project struct {
 	PersonaID      int64     `db:"persona_id"`
 }
 
+type ProjectCommit struct {
+	ID        	int64     `db:"id"`
+	ProjectID 	int64     `db:"project_id"`
+	CommitType 	string    `db:"commit_type"`
+	Branch    	string    `db:"branch"`
+	Message   	string    `db:"message"`
+	CreatedAt 	time.Time `db:"created_at"`
+}
+
 type Persona struct {
 	ID          int64     `db:"id"`
 	Name        string    `db:"name"`
@@ -46,4 +55,13 @@ type CronLog struct {
 	JobName   string    `db:"job_name"`
 	Status    string    `db:"status"`
 	RanAt    time.Time  `db:"ran_at"`
+}
+
+type DiscoveredRepos struct {
+	ID        int64     `db:"id"`
+	Name      string    `db:"name"`
+	Path      string    `db:"path"`
+	Branch    string    `db:"branch"`
+	LastCommit string    `db:"last_commit"`
+	CreatedAt time.Time `db:"created_at"`
 }
