@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AddProject } from "../../../wailsjs/go/main/App";
+import FormField from "./FormField";
 
 const inputStyle = {
   width: "100%",
@@ -33,33 +34,6 @@ export const CHAR_CONFIG = {
     color: "#a0d4b5",
   },
 };
-
-function FormField({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <label
-        style={{
-          fontFamily: "IBM Plex Mono, monospace",
-          fontSize: 11,
-          color: "#9090a8",
-          letterSpacing: ".06em",
-          textTransform: "uppercase",
-          marginBottom: 6,
-          display: "block",
-        }}
-      >
-        {label}
-      </label>
-      {children}
-    </div>
-  );
-}
 
 export default function AddProjectModal({
   onClose,
