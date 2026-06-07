@@ -45,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <li
               style={{
                 padding: 0,
-                marginBottom: "1rem",
+                marginBottom: ".2rem",
               }}
             >
               <Link

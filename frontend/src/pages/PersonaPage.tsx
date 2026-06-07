@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { models } from "../../wailsjs/go/models";
 import { GetAllPersonas } from "../../wailsjs/go/main/App";
+import Filters from "./component/FilterComponent";
 
 export default function PersonasPage() {
   const [personas, setPersonas] = useState<models.Persona[]>([]);
@@ -83,6 +84,7 @@ export default function PersonasPage() {
           + Create Persona
         </button>
       </div>
+      <Filters filter="all" filters={["all"]} setFilter={() => {}} />
     </div>
   );
 }
