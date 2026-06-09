@@ -3,27 +3,23 @@ package db
 import (
 	"side_piece/models"
 
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
 )
-func GetAllPersona(db *sqlx.DB) ([]models.Persona, error) {
+
+
+func GetAllPersona(db *gorm.DB) ([]models.Persona, error) {
     var personas []models.Persona
-    err := db.Select(&personas, `SELECT * FROM personas ORDER BY created_at DESC`)
-    return personas, err
+    result := db.Find(&personas)
+    return personas, result.Error
 }
 
-func AddPersona(db *sqlx.DB, p models.Persona) (int64, error) {
-    res, err := db.Exec(`
-        INSERT INTO personas (name, gender)
-        VALUES (?, ?)`,
-        p.Name, p.Gender,
-    )
-    if err != nil {
-        return 0, err
-    }
-    return res.LastInsertId()
+func AddPersona(db *gorm.DB, p models.Persona) (models.Persona, error) {
+    res := db.Create(&p)
+    return p, res.Error
 }
 
-func DeletePersona(db *sqlx.DB, personaID int64) error {
-    _, err := db.Exec(`DELETE FROM personas WHERE id = ?`, personaID)
-    return err
+func DeletePersona(db *gorm.DB, personaID uint) error {
+    var persona models.Persona
+    result := db.Where("ID= ?", personaID).Delete(&persona)
+    return result.Error
 }

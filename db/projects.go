@@ -2,49 +2,51 @@ package db
 
 import (
 	"side_piece/models"
+	"time"
 
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
 )
 
-func AddProject(db *sqlx.DB, p models.Project) (int64, error) {
-    res, err := db.Exec(`
-        INSERT INTO projects (name, path, persona_id, nag_interval_hours)
-        VALUES (?, ?, ?, ?)`,
-        p.Name, p.Path, p.PersonaID, p.NagIntervalHours,
-    )
-    if err != nil {
-        return 0, err
+func AddProject(db *gorm.DB,p models.Project) (models.Project, error) {
+
+    result := db.Create(&p)
+
+    if result.Error != nil {
+        return p, result.Error
     }
-    return res.LastInsertId()
+
+    return p, nil
 }
 
-func GetAllProjects(db *sqlx.DB) ([]models.Project, error) {
+func GetAllProjects(db *gorm.DB) ([]models.Project, error) {
     var projects []models.Project
-    err := db.Select(&projects, `SELECT * FROM projects ORDER BY created_at DESC`)
-    return projects, err
+    result := db.Find(&projects).Preload("Persona")
+    return projects, result.Error
 }
 
-func GetActiveProjects(db *sqlx.DB) ([]models.Project, error) {
+func GetActiveProjects(db *gorm.DB) ([]models.Project, error) {
     var projects []models.Project
-    err := db.Select(&projects,
-        `SELECT * FROM projects WHERE status != 'paused' ORDER BY last_commit_at ASC`)
-    return projects, err
+    result := db.Find(&projects, "status = ?", "active")
+    return projects, result.Error
 }
 
-func UpdateLastCommit(db *sqlx.DB, projectID int64) error {
-    _, err := db.Exec(`
-        UPDATE projects
-        SET last_commit_at = CURRENT_TIMESTAMP, status = 'active'
-        WHERE id = ?`, projectID)
-    return err
+func UpdateLastCommit(db *gorm.DB, projectID uint) error {
+    now:= time.Now()
+    result := db.Where("ID = ?", projectID).Save(&models.Project{
+        LastCommitAt: &now,
+    })
+    return result.Error
 }
 
-func UpdateStatus(db *sqlx.DB, projectID int64, status string) error {
-    _, err := db.Exec(`UPDATE projects SET status = ? WHERE id = ?`, status, projectID)
-    return err
+func UpdateStatus(db *gorm.DB, projectID uint, status string) error {
+    result :=  db.Where("ID = ?", projectID).Save(&models.Project{
+        Status: status,
+    })
+    return result.Error
 }
 
-func DeleteProject(db *sqlx.DB, projectID int64) error {
-    _, err := db.Exec(`DELETE FROM projects WHERE id = ?`, projectID)
-    return err
+func DeleteProject(db *gorm.DB, projectID uint) error {
+    var project models.Project
+    result := db.Where("ID= ?", projectID).Delete(&project)
+    return result.Error
 }

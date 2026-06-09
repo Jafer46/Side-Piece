@@ -26,6 +26,10 @@ export function GetProjects() {
   return window['go']['main']['App']['GetProjects']();
 }
 
+export function ScanAndCache() {
+  return window['go']['main']['App']['ScanAndCache']();
+}
+
 export function UpdateProjectStatus(arg1, arg2) {
   return window['go']['main']['App']['UpdateProjectStatus'](arg1, arg2);
 }

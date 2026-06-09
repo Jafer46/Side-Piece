@@ -1,14 +1,41 @@
+export namespace git {
+	
+	export class ScanResult {
+	    path: string;
+	    name: string;
+	    last_commit: string;
+	    branch: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new ScanResult(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.path = source["path"];
+	        this.name = source["name"];
+	        this.last_commit = source["last_commit"];
+	        this.branch = source["branch"];
+	    }
+	}
+
+}
+
 export namespace models {
 	
 	export class Persona {
 	    ID: number;
+	    // Go type: time
+	    CreatedAt: any;
+	    // Go type: time
+	    UpdatedAt: any;
+	    // Go type: gorm
+	    DeletedAt: any;
 	    Name: string;
 	    Gender: string;
 	    Color: string;
 	    Emoji: string;
 	    Description: string;
-	    // Go type: time
-	    CreatedAt: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new Persona(source);
@@ -17,12 +44,14 @@ export namespace models {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.ID = source["ID"];
+	        this.CreatedAt = this.convertValues(source["CreatedAt"], null);
+	        this.UpdatedAt = this.convertValues(source["UpdatedAt"], null);
+	        this.DeletedAt = this.convertValues(source["DeletedAt"], null);
 	        this.Name = source["Name"];
 	        this.Gender = source["Gender"];
 	        this.Color = source["Color"];
 	        this.Emoji = source["Emoji"];
 	        this.Description = source["Description"];
-	        this.CreatedAt = this.convertValues(source["CreatedAt"], null);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -45,6 +74,12 @@ export namespace models {
 	}
 	export class Project {
 	    ID: number;
+	    // Go type: time
+	    CreatedAt: any;
+	    // Go type: time
+	    UpdatedAt: any;
+	    // Go type: gorm
+	    DeletedAt: any;
 	    Name: string;
 	    Path: string;
 	    Status: string;
@@ -53,9 +88,8 @@ export namespace models {
 	    // Go type: time
 	    LastNagAt?: any;
 	    NagIntervalHours: number;
-	    // Go type: time
-	    CreatedAt: any;
 	    PersonaID: number;
+	    Persona: Persona;
 	
 	    static createFrom(source: any = {}) {
 	        return new Project(source);
@@ -64,14 +98,17 @@ export namespace models {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.ID = source["ID"];
+	        this.CreatedAt = this.convertValues(source["CreatedAt"], null);
+	        this.UpdatedAt = this.convertValues(source["UpdatedAt"], null);
+	        this.DeletedAt = this.convertValues(source["DeletedAt"], null);
 	        this.Name = source["Name"];
 	        this.Path = source["Path"];
 	        this.Status = source["Status"];
 	        this.LastCommitAt = this.convertValues(source["LastCommitAt"], null);
 	        this.LastNagAt = this.convertValues(source["LastNagAt"], null);
 	        this.NagIntervalHours = source["NagIntervalHours"];
-	        this.CreatedAt = this.convertValues(source["CreatedAt"], null);
 	        this.PersonaID = source["PersonaID"];
+	        this.Persona = this.convertValues(source["Persona"], Persona);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

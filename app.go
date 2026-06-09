@@ -6,17 +6,17 @@ import (
 	"side_piece/git"
 	"side_piece/models"
 
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
 )
 
 // App struct
 type App struct {
     ctx context.Context
-    db  *sqlx.DB
+    db  *gorm.DB
 }
 
 // NewApp creates a new App application struct
-func NewApp(database *sqlx.DB) *App {
+func NewApp(database *gorm.DB) *App {
 	return &App{db: database}
 }
 
@@ -32,20 +32,20 @@ func (a *App) GetProjects() ([]models.Project, error) {
     return db.GetAllProjects(a.db)
 }
 
-func (a *App) AddProject(name string, path string, personaId int, nagInterval int) (int64, error) {
+func (a *App) AddProject(name string, path string, personaId uint, nagInterval int) (models.Project, error) {
     return db.AddProject(a.db, models.Project{
         Name:             name,
         Path:             path,
-        PersonaID:        int64(personaId),
+        PersonaID:        personaId,
         NagIntervalHours: nagInterval,
     })
 }
 
-func (a *App) DeleteProject(id int64) error {
-    return db.DeleteProject(a.db, id)
+func (a *App) DeleteProject(id uint) error {
+    return db.DeleteProject(a.db,id)
 }
 
-func (a *App) UpdateProjectStatus(id int64, status string) error {
+func (a *App) UpdateProjectStatus(id uint, status string) error {
     return db.UpdateStatus(a.db, id, status)
 }
 
@@ -54,14 +54,14 @@ func (a *App) GetAllPersonas() ([]models.Persona,error) {
     return db.GetAllPersona(a.db)
 }
 
-func (a *App) AddPersona(name string, gender string) (int64, error) {
+func (a *App) AddPersona(name string, gender string) (models.Persona, error) {
     return db.AddPersona(a.db, models.Persona{
         Name:   name,
         Gender: gender,
     })
 }
 
-func (a *App) DeletePersona(id int64) error {
+func (a *App) DeletePersona(id uint) error {
     return db.DeletePersona(a.db, id)
 }
 
@@ -71,10 +71,9 @@ func (a *App) ScanAndCache() ([]git.ScanResult, error) {
         return nil, err
     }
 
-    // Wipe old cache and store fresh results
-    // a.db.Exec(`DELETE FROM discovered_repos`)
     for _, r := range results {
-        _, error := db.AddRepo(a.db, models.DiscoveredRepos{
+        _, error := db.AddRepo(a.db, 
+            models.DiscoveredRepos{
             Name:      r.Name,
             Path:      r.Path,
             Branch:    r.Branch,

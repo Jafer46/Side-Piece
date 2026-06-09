@@ -2,14 +2,16 @@ package main
 
 import (
 	"embed"
+	"side_piece/models"
 
 	"os"
 	"path/filepath"
-	"side_piece/db"
 
+	"github.com/glebarez/sqlite"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"gorm.io/gorm"
 )
 
 //go:embed all:frontend/dist
@@ -17,11 +19,17 @@ var assets embed.FS
 
 func main() {
 
-	print("Hello 1")
-
 	dbPath := filepath.Join(filepath.Dir(os.Args[0]), "sidepiece.db")
 
-    database, err := db.Open(dbPath)
+    database, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	database.AutoMigrate(
+		&models.Project{}, &models.Persona{}, 
+		&models.DiscoveredRepos{}, &models.ProjectCommit{}, 
+		&models.CronLog{}, &models.PersonaMessages{})
     
 
 	
