@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"side_piece/db"
+	"side_piece/db/models"
 	"side_piece/git"
-	"side_piece/models"
 
 	"gorm.io/gorm"
 )
