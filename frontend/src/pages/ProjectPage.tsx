@@ -8,6 +8,8 @@ import { models } from "../../wailsjs/go/models";
 import AddProjectModal, { CHAR_CONFIG } from "./component/ProjectModal";
 import Filters from "./component/FilterComponent";
 import ActionButton from "./component/ActionButton";
+import PageSelector from "./component/PageSelector";
+import Badge from "./component/Badge";
 
 type Status = "active" | "idle" | "abandoned" | "paused";
 
@@ -36,33 +38,6 @@ function StatusDot({ status }: { status: Status }) {
         display: "inline-block",
       }}
     />
-  );
-}
-
-function Badge({
-  children,
-  color = "#5a5a72",
-  bg = "transparent",
-}: {
-  children: React.ReactNode;
-  color?: string;
-  bg?: string;
-}) {
-  return (
-    <span
-      style={{
-        fontFamily: "IBM Plex Mono, monospace",
-        fontSize: 10,
-        padding: "3px 8px",
-        borderRadius: 3,
-        border: `0.5px solid ${color}`,
-        color,
-        background: bg,
-        letterSpacing: ".04em",
-      }}
-    >
-      {children}
-    </span>
   );
 }
 
@@ -163,12 +138,15 @@ export default function ProjectsPage() {
   const [filter, setFilter] = useState("all");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [availablePages, setAvailablePages] = useState(1);
 
   useEffect(() => {
     GetProjects()
       .then(setProjects)
       .catch(console.error)
       .finally(() => setLoading(false));
+    console.log(projects);
   }, []);
 
   async function handleDelete(id: number) {
@@ -367,6 +345,11 @@ export default function ProjectsPage() {
             ))}
           </div>
         )}
+        <PageSelector
+          page={page}
+          availablePages={availablePages}
+          setPage={setPage}
+        />
       </div>
 
       {showModal && (
