@@ -32,10 +32,11 @@ func (a *App) GetProjects() ([]models.Project, error) {
     return db.GetAllProjects(a.db)
 }
 
-func (a *App) AddProject(name string, path string, personaId uint, nagInterval int) (models.Project, error) {
+func (a *App) AddProject(name string, path string, status string, personaId uint, nagInterval int) (models.Project, error) {
     return db.AddProject(a.db, models.Project{
         Name:             name,
         Path:             path,
+        Status:           status,
         PersonaID:        personaId,
         NagIntervalHours: nagInterval,
     })

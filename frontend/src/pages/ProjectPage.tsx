@@ -11,8 +11,7 @@ import ActionButton from "./component/ActionButton";
 import PageSelector from "./component/PageSelector";
 import Badge from "./component/Badge";
 import COLORS from "../constants/colors";
-
-type Status = "active" | "idle" | "abandoned" | "paused";
+import { Status } from "../constants/status";
 
 const STATUS_COLORS = {
   active: { dot: COLORS.SUCCESS, shadow: "0 0 6px #2ecc71" },

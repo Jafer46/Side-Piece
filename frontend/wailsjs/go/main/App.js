@@ -6,8 +6,8 @@ export function AddPersona(arg1, arg2) {
   return window['go']['main']['App']['AddPersona'](arg1, arg2);
 }
 
-export function AddProject(arg1, arg2, arg3, arg4) {
-  return window['go']['main']['App']['AddProject'](arg1, arg2, arg3, arg4);
+export function AddProject(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['main']['App']['AddProject'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function DeletePersona(arg1) {

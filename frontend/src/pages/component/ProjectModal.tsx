@@ -3,6 +3,7 @@ import { AddProject, GetAllPersonas } from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
 import { models } from "../../../wailsjs/go/models";
 import COLORS from "../../constants/colors";
+import { Status, STATUS_LIST } from "../../constants/status";
 
 const inputStyle = {
   width: "100%",
@@ -27,6 +28,7 @@ export default function AddProjectModal({
   const [path, setPath] = useState("");
   const [nag, setNag] = useState(24);
   const [personaId, setCharacter] = useState(1);
+  const [status, setStatus] = useState<Status>(STATUS_LIST[0]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [personas, setPersonas] = useState<models.Persona[]>([]);
@@ -47,13 +49,19 @@ export default function AddProjectModal({
     setLoading(true);
     setError("");
     try {
-      const id = await AddProject(name.trim(), path.trim(), personaId, nag);
+      const id = await AddProject(
+        name.trim(),
+        path.trim(),
+        status,
+        personaId,
+        nag,
+      );
       onAdd({
         id,
         name,
         path,
         personaId,
-        status: "active",
+        status,
         nag_interval_hours: nag,
         last_commit_at: null,
       });
@@ -130,6 +138,19 @@ export default function AddProjectModal({
             <option value={48}>48 hours</option>
           </select>
         </FormField>
+        <FormField label="Status">
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as Status)}
+            style={inputStyle}
+          >
+            {STATUS_LIST.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+        </FormField>
 
         <FormField label="Persona">
           <div
@@ -146,7 +167,8 @@ export default function AddProjectModal({
                   key={key}
                   onClick={() => setCharacter(Number(key))}
                   style={{
-                    border: `0.5px solid ${personaId === Number(key) ? cfg.Color : COLORS.DARK}`,
+                    border: `0.5px solid ${personaId === Number(key) ? COLORS.PRIMARY : COLORS.DARK}`,
+
                     borderRadius: 6,
                     padding: "10px 8px",
                     textAlign: "center",
@@ -163,7 +185,10 @@ export default function AddProjectModal({
                     style={{
                       fontFamily: "IBM Plex Mono, monospace",
                       fontSize: 11,
-                      color: COLORS.FOREGROUND,
+                      color:
+                        personaId === Number(key)
+                          ? COLORS.PRIMARY
+                          : COLORS.FOREGROUND,
                       marginTop: 4,
                     }}
                   >

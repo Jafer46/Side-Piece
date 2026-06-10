@@ -5,7 +5,7 @@ import {git} from '../models';
 
 export function AddPersona(arg1:string,arg2:string):Promise<models.Persona>;
 
-export function AddProject(arg1:string,arg2:string,arg3:number,arg4:number):Promise<models.Project>;
+export function AddProject(arg1:string,arg2:string,arg3:string,arg4:number,arg5:number):Promise<models.Project>;
 
 export function DeletePersona(arg1:number):Promise<void>;
 
