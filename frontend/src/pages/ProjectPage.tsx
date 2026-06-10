@@ -5,7 +5,7 @@ import {
   UpdateProjectStatus,
 } from "../../wailsjs/go/main/App";
 import { models } from "../../wailsjs/go/models";
-import AddProjectModal, { CHAR_CONFIG } from "./component/ProjectModal";
+import AddProjectModal from "./component/ProjectModal";
 import Filters from "./component/FilterComponent";
 import ActionButton from "./component/ActionButton";
 import PageSelector from "./component/PageSelector";
@@ -51,7 +51,6 @@ function ProjectCard({
   onDelete: any;
   onTogglePause: any;
 }) {
-  const char = CHAR_CONFIG[1];
   const isPaused = project.Status === "paused";
 
   return (
@@ -111,9 +110,9 @@ function ProjectCard({
           >
             {project.Status}
           </Badge>
-          <Badge color={char.color} bg={`${char.color}18`}>
+          {/* <Badge color={char.color} bg={`${char.color}18`}>
             {char.label}
-          </Badge>
+          </Badge> */}
           <Badge color={COLORS.MUTED}>
             {nagLabel(project.NagIntervalHours)}
           </Badge>

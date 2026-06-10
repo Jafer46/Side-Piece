@@ -16,27 +16,6 @@ const inputStyle = {
   outline: "none",
 };
 
-export const CHAR_CONFIG = {
-  1: {
-    label: "Marcus",
-    desc: "Passive aggressive",
-    emoji: "👨",
-    color: "#7b8cde",
-  },
-  2: {
-    label: "Ava",
-    desc: "Emotionally intense",
-    emoji: "👩",
-    color: "#e8a0bf",
-  },
-  3: {
-    label: "The Ghost",
-    desc: "Just haunts you",
-    emoji: "👻",
-    color: "#a0d4b5",
-  },
-};
-
 export default function AddProjectModal({
   onClose,
   onAdd,
