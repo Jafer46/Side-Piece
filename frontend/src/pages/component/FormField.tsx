@@ -1,3 +1,5 @@
+import COLORS from "../../constants/colors";
+
 export default function FormField({
   label,
   children,
@@ -11,7 +13,7 @@ export default function FormField({
         style={{
           fontFamily: "IBM Plex Mono, monospace",
           fontSize: 11,
-          color: "#9090a8",
+          color: COLORS.LIGHT,
           letterSpacing: ".06em",
           textTransform: "uppercase",
           marginBottom: 6,

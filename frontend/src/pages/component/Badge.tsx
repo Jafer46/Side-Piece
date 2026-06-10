@@ -1,6 +1,8 @@
+import COLORS from "../../constants/colors";
+
 export default function Badge({
   children,
-  color = "#5a5a72",
+  color = COLORS.MUTED,
   bg = "transparent",
 }: {
   children: React.ReactNode;

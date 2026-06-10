@@ -1,3 +1,5 @@
+import COLORS from "../../constants/colors";
+
 export default function Filters({
   filter,
   filters,
@@ -25,9 +27,9 @@ export default function Filters({
             fontSize: 11,
             padding: "5px 12px",
             borderRadius: 4,
-            border: `0.5px solid ${filter === f ? "#ff4757" : "#2e2e38"}`,
-            background: filter === f ? "rgba(255,71,87,.08)" : "transparent",
-            color: filter === f ? "#ff4757" : "#9090a8",
+            border: `0.5px solid ${filter === f ? COLORS.PRIMARY : COLORS.DARK}`,
+            background: filter === f ? COLORS.BACKGROUND : "transparent",
+            color: filter === f ? COLORS.PRIMARY : COLORS.LIGHT,
             cursor: "pointer",
             letterSpacing: ".04em",
           }}

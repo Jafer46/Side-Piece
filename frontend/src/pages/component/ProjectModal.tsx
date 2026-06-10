@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { AddProject, GetAllPersonas } from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
 import { models } from "../../../wailsjs/go/models";
+import COLORS from "../../constants/colors";
 
 const inputStyle = {
   width: "100%",
-  background: "#1e1e24",
+  background: COLORS.BACKGROUND,
   border: "0.5px solid #2e2e38",
   borderRadius: 6,
   padding: "9px 12px",
-  color: "#e8e8f0",
+  color: COLORS.FOREGROUND,
   fontFamily: "IBM Plex Mono, monospace",
   fontSize: 12,
   outline: "none",
@@ -99,8 +100,8 @@ export default function AddProjectModal({
     >
       <div
         style={{
-          background: "#16161a",
-          border: "0.5px solid #3e3e4e",
+          background: COLORS.BACKGROUND,
+          border: `0.5px solid ${COLORS.DARK}`,
           borderRadius: 12,
           padding: 28,
           width: "100%",
@@ -111,7 +112,7 @@ export default function AddProjectModal({
           style={{
             fontFamily: "IBM Plex Mono, monospace",
             fontSize: 13,
-            color: "#ff4757",
+            color: COLORS.PRIMARY,
             letterSpacing: ".08em",
             textTransform: "uppercase",
             marginBottom: 20,
@@ -166,13 +167,15 @@ export default function AddProjectModal({
                   key={key}
                   onClick={() => setCharacter(Number(key))}
                   style={{
-                    border: `0.5px solid ${personaId === Number(key) ? cfg.Color : "#2e2e38"}`,
+                    border: `0.5px solid ${personaId === Number(key) ? cfg.Color : COLORS.DARK}`,
                     borderRadius: 6,
                     padding: "10px 8px",
                     textAlign: "center",
                     cursor: "pointer",
                     background:
-                      personaId === Number(key) ? `${cfg.Color}18` : "#1e1e24",
+                      personaId === Number(key)
+                        ? `${cfg.Color}18`
+                        : COLORS.BACKGROUND,
                     transition: "all .15s",
                   }}
                 >
@@ -181,13 +184,15 @@ export default function AddProjectModal({
                     style={{
                       fontFamily: "IBM Plex Mono, monospace",
                       fontSize: 11,
-                      color: "#e8e8f0",
+                      color: COLORS.FOREGROUND,
                       marginTop: 4,
                     }}
                   >
                     {cfg.Name}
                   </div>
-                  <div style={{ fontSize: 10, color: "#5a5a72", marginTop: 2 }}>
+                  <div
+                    style={{ fontSize: 10, color: COLORS.MUTED, marginTop: 2 }}
+                  >
                     {cfg.Description}
                   </div>
                 </div>
@@ -200,7 +205,7 @@ export default function AddProjectModal({
             style={{
               fontFamily: "IBM Plex Mono, monospace",
               fontSize: 11,
-              color: "#e74c3c",
+              color: COLORS.DANGER,
               marginTop: 8,
             }}
           >
@@ -240,8 +245,8 @@ const cancelBtnStyle = {
 };
 
 const saveBtnStyle = {
-  background: "#ff4757",
-  color: "#fff",
+  background: COLORS.PRIMARY,
+  color: COLORS.FOREGROUND,
   border: "none",
   padding: "8px 16px",
   borderRadius: 5,

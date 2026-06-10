@@ -10,14 +10,15 @@ import Filters from "./component/FilterComponent";
 import ActionButton from "./component/ActionButton";
 import PageSelector from "./component/PageSelector";
 import Badge from "./component/Badge";
+import COLORS from "../constants/colors";
 
 type Status = "active" | "idle" | "abandoned" | "paused";
 
 const STATUS_COLORS = {
-  active: { dot: "#2ecc71", shadow: "0 0 6px #2ecc71" },
-  idle: { dot: "#f39c12", shadow: "none" },
-  abandoned: { dot: "#e74c3c", shadow: "none" },
-  paused: { dot: "#5a5a72", shadow: "none" },
+  active: { dot: COLORS.SUCCESS, shadow: "0 0 6px #2ecc71" },
+  idle: { dot: COLORS.WARNING, shadow: "none" },
+  abandoned: { dot: COLORS.DANGER, shadow: "none" },
+  paused: { dot: COLORS.MUTED, shadow: "none" },
 };
 
 function nagLabel(h: any) {
@@ -56,7 +57,7 @@ function ProjectCard({
   return (
     <div
       style={{
-        background: "#16161a",
+        background: COLORS.BACKGROUND,
         border: "0.5px solid #2e2e38",
         borderRadius: 10,
         padding: "18px 20px",
@@ -76,8 +77,13 @@ function ProjectCard({
           style={{
             fontSize: 14,
             fontWeight: 500,
-            color: "#e8e8f0",
+            color: COLORS.FOREGROUND,
             marginBottom: 3,
+            textAlign: "left",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: 380,
           }}
         >
           {project.Name}
@@ -86,11 +92,12 @@ function ProjectCard({
           style={{
             fontFamily: "IBM Plex Mono, monospace",
             fontSize: 11,
-            color: "#5a5a72",
+            color: COLORS.MUTED,
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
             maxWidth: 380,
+            textAlign: "left",
           }}
         >
           {project.Path}
@@ -99,17 +106,19 @@ function ProjectCard({
           style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}
         >
           <Badge
-            color={STATUS_COLORS[project.Status as Status]?.dot || "#5a5a72"}
-            bg={`${STATUS_COLORS[project.Status as Status]?.dot || "#5a5a72"}18`}
+            color={STATUS_COLORS[project.Status as Status]?.dot || COLORS.MUTED}
+            bg={`${STATUS_COLORS[project.Status as Status]?.dot || COLORS.MUTED}18`}
           >
             {project.Status}
           </Badge>
           <Badge color={char.color} bg={`${char.color}18`}>
             {char.label}
           </Badge>
-          <Badge color="#5a5a72">{nagLabel(project.NagIntervalHours)}</Badge>
+          <Badge color={COLORS.MUTED}>
+            {nagLabel(project.NagIntervalHours)}
+          </Badge>
           {project.LastCommitAt && (
-            <Badge color="#5a5a72">
+            <Badge color={COLORS.MUTED}>
               {new Date(project.LastCommitAt).toLocaleDateString()}
             </Badge>
           )}
@@ -119,11 +128,14 @@ function ProjectCard({
       <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
         <ActionButton
           onClick={() => onTogglePause(project.ID, project.Status)}
-          hoverColor="#f39c12"
+          hoverColor={COLORS.WARNING}
         >
           {isPaused ? "Resume" : "Pause"}
         </ActionButton>
-        <ActionButton onClick={() => onDelete(project.ID)} hoverColor="#e74c3c">
+        <ActionButton
+          onClick={() => onDelete(project.ID)}
+          hoverColor={COLORS.DANGER}
+        >
           Remove
         </ActionButton>
       </div>
@@ -195,7 +207,7 @@ export default function ProjectsPage() {
               style={{
                 fontFamily: "IBM Plex Mono, monospace",
                 fontSize: 11,
-                color: "#ff4757",
+                color: COLORS.PRIMARY,
                 letterSpacing: ".12em",
                 textTransform: "uppercase",
                 marginBottom: 6,
@@ -217,7 +229,7 @@ export default function ProjectsPage() {
             <div
               style={{
                 fontSize: 13,
-                color: "#9090a8",
+                color: COLORS.LIGHT,
                 marginTop: 4,
                 fontWeight: 300,
               }}
@@ -231,8 +243,8 @@ export default function ProjectsPage() {
               display: "flex",
               alignItems: "center",
               gap: 8,
-              background: "#ff4757",
-              color: "#fff",
+              background: COLORS.PRIMARY,
+              color: COLORS.FOREGROUND,
               border: "none",
               padding: "10px 18px",
               borderRadius: 6,
@@ -260,16 +272,16 @@ export default function ProjectsPage() {
             {
               label: "Registered",
               val: projects?.length || 0,
-              color: "#e8e8f0",
+              color: COLORS.FOREGROUND,
             },
-            { label: "Active", val: counts.active, color: "#2ecc71" },
-            { label: "Idle", val: counts.idle, color: "#f39c12" },
-            { label: "Abandoned", val: counts.abandoned, color: "#e74c3c" },
+            { label: "Active", val: counts.active, color: COLORS.SUCCESS },
+            { label: "Idle", val: counts.idle, color: COLORS.SUCCESS },
+            { label: "Abandoned", val: counts.abandoned, color: COLORS.DANGER },
           ].map((s) => (
             <div
               key={s.label}
               style={{
-                background: "#16161a",
+                background: COLORS.BACKGROUND,
                 border: "0.5px solid #2e2e38",
                 borderRadius: 8,
                 padding: "12px 18px",
@@ -289,7 +301,7 @@ export default function ProjectsPage() {
               <div
                 style={{
                   fontSize: 11,
-                  color: "#5a5a72",
+                  color: COLORS.MUTED,
                   textTransform: "uppercase",
                   letterSpacing: ".08em",
                   marginTop: 4,
@@ -308,7 +320,7 @@ export default function ProjectsPage() {
         {loading ? (
           <div
             style={{
-              color: "#5a5a72",
+              color: COLORS.MUTED,
               fontFamily: "IBM Plex Mono, monospace",
               fontSize: 13,
               padding: "40px 0",
@@ -321,7 +333,7 @@ export default function ProjectsPage() {
             style={{
               textAlign: "center",
               padding: "60px 20px",
-              color: "#5a5a72",
+              color: COLORS.MUTED,
             }}
           >
             <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.4 }}>

@@ -4,6 +4,7 @@ import { GetAllPersonas } from "../../wailsjs/go/main/App";
 import Filters from "./component/FilterComponent";
 import ActionButton from "./component/ActionButton";
 import AddPersonaModal from "./component/PersonaModal";
+import COLORS from "../constants/colors";
 
 function PersonaCard({
   persona,
@@ -15,8 +16,8 @@ function PersonaCard({
   return (
     <div
       style={{
-        background: "#16161a",
-        border: "0.5px solid #2e2e38",
+        background: COLORS.BACKGROUND,
+        border: `0.5px solid ${COLORS.DARK}`,
         borderRadius: 10,
         padding: "18px 20px",
         display: "flex",
@@ -32,8 +33,13 @@ function PersonaCard({
           style={{
             fontSize: 14,
             fontWeight: 500,
-            color: "#e8e8f0",
+            color: COLORS.FOREGROUND,
             marginBottom: 3,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: 380,
+            textAlign: "left",
           }}
         >
           {persona.Name}
@@ -42,11 +48,12 @@ function PersonaCard({
           style={{
             fontFamily: "IBM Plex Mono, monospace",
             fontSize: 11,
-            color: "#5a5a72",
+            color: COLORS.MUTED,
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
             maxWidth: 380,
+            textAlign: "left",
           }}
         >
           {persona.Gender}
@@ -54,7 +61,10 @@ function PersonaCard({
       </div>
 
       <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
-        <ActionButton onClick={() => onDelete(persona.ID)} hoverColor="#e74c3c">
+        <ActionButton
+          onClick={() => onDelete(persona.ID)}
+          hoverColor={COLORS.DANGER}
+        >
           Remove
         </ActionButton>
       </div>
@@ -100,7 +110,7 @@ export default function PersonasPage() {
             style={{
               fontFamily: "IBM Plex Mono, monospace",
               fontSize: 11,
-              color: "#ff4757",
+              color: COLORS.PRIMARY,
               letterSpacing: ".12em",
               textTransform: "uppercase",
               marginBottom: 6,
@@ -122,7 +132,7 @@ export default function PersonasPage() {
           <div
             style={{
               fontSize: 13,
-              color: "#9090a8",
+              color: COLORS.LIGHT,
               marginTop: 4,
               fontWeight: 300,
             }}
@@ -136,8 +146,8 @@ export default function PersonasPage() {
             display: "flex",
             alignItems: "center",
             gap: 8,
-            background: "#ff4757",
-            color: "#fff",
+            background: COLORS.PRIMARY,
+            color: COLORS.FOREGROUND,
             border: "none",
             padding: "10px 18px",
             borderRadius: 6,
@@ -155,7 +165,7 @@ export default function PersonasPage() {
       {loading ? (
         <div
           style={{
-            color: "#5a5a72",
+            color: COLORS.MUTED,
             fontFamily: "IBM Plex Mono, monospace",
             fontSize: 13,
             padding: "40px 0",
@@ -168,7 +178,7 @@ export default function PersonasPage() {
           style={{
             textAlign: "center",
             padding: "60px 20px",
-            color: "#5a5a72",
+            color: COLORS.MUTED,
           }}
         >
           <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.4 }}>👻</div>

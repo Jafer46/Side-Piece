@@ -1,4 +1,5 @@
 import { useState } from "react";
+import COLORS from "../../constants/colors";
 
 export default function ActionButton({
   children,
@@ -17,8 +18,8 @@ export default function ActionButton({
       onMouseLeave={() => setHovered(false)}
       style={{
         background: "transparent",
-        border: `0.5px solid ${hovered ? hoverColor : "#2e2e38"}`,
-        color: hovered ? hoverColor : "#9090a8",
+        border: `0.5px solid ${hovered ? hoverColor : COLORS.DARK}`,
+        color: hovered ? hoverColor : COLORS.LIGHT,
         padding: "6px 10px",
         borderRadius: 5,
         fontFamily: "IBM Plex Mono, monospace",

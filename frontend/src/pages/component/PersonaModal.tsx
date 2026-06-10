@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { AddPersona } from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
+import COLORS from "../../constants/colors";
 
 const inputStyle = {
   width: "100%",
-  background: "#1e1e24",
-  border: "0.5px solid #2e2e38",
+  background: COLORS.BACKGROUND,
+  border: `0.5px solid ${COLORS.DARK}`,
   borderRadius: 6,
   padding: "9px 12px",
-  color: "#e8e8f0",
+  color: COLORS.FOREGROUND,
   fontFamily: "IBM Plex Mono, monospace",
   fontSize: 12,
   outline: "none",
 };
 
-const PersonaColors = ["#7b8cde", "#e8a0bf", "#a0d4b5"];
+const PersonaColors = [
+  COLORS.PRIMARY,
+  COLORS.SUCCESS,
+  COLORS.WARNING,
+  COLORS.DANGER,
+  COLORS.MUTED,
+];
 
 export default function AddPersonaModal({
   onClose,
@@ -67,8 +74,8 @@ export default function AddPersonaModal({
     >
       <div
         style={{
-          background: "#16161a",
-          border: "0.5px solid #3e3e4e",
+          background: COLORS.BACKGROUND,
+          border: `0.5px solid ${COLORS.DARK}`,
           borderRadius: 12,
           padding: 28,
           width: "100%",
@@ -79,7 +86,7 @@ export default function AddPersonaModal({
           style={{
             fontFamily: "IBM Plex Mono, monospace",
             fontSize: 13,
-            color: "#ff4757",
+            color: COLORS.PRIMARY,
             letterSpacing: ".08em",
             textTransform: "uppercase",
             marginBottom: 20,
@@ -148,7 +155,7 @@ export default function AddPersonaModal({
             style={{
               fontFamily: "IBM Plex Mono, monospace",
               fontSize: 11,
-              color: "#e74c3c",
+              color: COLORS.DANGER,
               marginTop: 8,
             }}
           >
@@ -178,8 +185,8 @@ export default function AddPersonaModal({
 
 const cancelBtnStyle = {
   background: "transparent",
-  border: "0.5px solid #2e2e38",
-  color: "#9090a8",
+  border: `0.5px solid ${COLORS.DARK}`,
+  color: COLORS.LIGHT,
   padding: "8px 16px",
   borderRadius: 5,
   fontFamily: "IBM Plex Mono, monospace",
@@ -188,8 +195,8 @@ const cancelBtnStyle = {
 };
 
 const saveBtnStyle = {
-  background: "#ff4757",
-  color: "#fff",
+  background: COLORS.PRIMARY,
+  color: COLORS.FOREGROUND,
   border: "none",
   padding: "8px 16px",
   borderRadius: 5,
