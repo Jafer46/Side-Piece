@@ -5,6 +5,7 @@ import Filters from "./component/FilterComponent";
 import ActionButton from "./component/ActionButton";
 import AddPersonaModal from "./component/PersonaModal";
 import COLORS from "../constants/colors";
+import PageHeader from "./component/PageHeader";
 
 function PersonaCard({
   persona,
@@ -95,72 +96,12 @@ export default function PersonasPage() {
 
   return (
     <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          marginBottom: 36,
-          gap: 16,
-          flexWrap: "wrap",
-        }}
-      >
-        <div>
-          <div
-            style={{
-              fontFamily: "IBM Plex Mono, monospace",
-              fontSize: 11,
-              color: COLORS.PRIMARY,
-              letterSpacing: ".12em",
-              textTransform: "uppercase",
-              marginBottom: 6,
-              textAlign: "left",
-            }}
-          >
-            // personas
-          </div>
-          <div
-            style={{
-              fontSize: 26,
-              fontWeight: 500,
-              letterSpacing: "-.02em",
-              textAlign: "left",
-            }}
-          >
-            Sidepieces Persona
-          </div>
-          <div
-            style={{
-              fontSize: 13,
-              color: COLORS.LIGHT,
-              marginTop: 4,
-              fontWeight: 300,
-            }}
-          >
-            Here are a defined personas for your sidepieces.
-          </div>
-        </div>
-        <button
-          onClick={() => setShowModal(true)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            background: COLORS.PRIMARY,
-            color: COLORS.FOREGROUND,
-            border: "none",
-            padding: "10px 18px",
-            borderRadius: 6,
-            fontFamily: "IBM Plex Mono, monospace",
-            fontSize: 12,
-            fontWeight: 500,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
-        >
-          + Create Persona
-        </button>
-      </div>
+      <PageHeader
+        title="Personas"
+        subTitle=""
+        description=""
+        setShowModal={setShowModal}
+      />
       <Filters filter="all" filters={["all"]} setFilter={() => {}} />
       {loading ? (
         <div
