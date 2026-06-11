@@ -1,4 +1,7 @@
 import { Link, useLocation } from "react-router";
+import Badge from "./pages/component/Badge";
+import COLORS from "./constants/colors";
+import { useState } from "react";
 
 const routes = [
   { path: "/", name: "Projects" },
@@ -7,28 +10,47 @@ const routes = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const [open, setOpen] = useState(true);
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "row",
-        width: "100vw",
+        maxWidth: "100vw",
         backgroundColor: "#fff",
       }}
     >
       <nav
         style={{
-          width: "200px",
+          width: open ? "200px" : "0px",
           minHeight: "100vh",
           background: "#1e1e24",
           color: "#e8e8f0",
           fontSize: "12px",
+          position: "fixed",
+          zIndex: 4,
+          overflow: "hidden",
+          transition: "width .15s",
         }}
       >
         <div
           style={{
+            display: "flex",
+            justifyContent: "right",
+            alignItems: "baseline",
+            padding: ".2rem",
+          }}
+        >
+          <button
+            style={{ all: "unset" }}
+            onClick={() => setOpen((open) => !open)}
+          >
+            <Badge color={COLORS.LIGHT}>X</Badge>
+          </button>
+        </div>
+        <div
+          style={{
             background: "#1e1e24",
-            padding: "1.5rem 1.5rem 0 1.5rem",
             borderBottom: "0.5px solid #2e2e38",
             fontFamily: "IBM Plex Mono, monospace",
           }}
@@ -67,6 +89,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           ))}
         </ul>
       </nav>
+      <button
+        style={{ all: "unset", position: "fixed", zIndex: 1 }}
+        onClick={() => setOpen((open) => !open)}
+      >
+        <Badge color={COLORS.LIGHT}>=</Badge>
+      </button>
       <div
         style={{
           background: "#0e0e10",
