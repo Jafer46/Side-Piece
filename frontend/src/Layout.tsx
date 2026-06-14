@@ -105,7 +105,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           width: "100%",
         }}
       >
-        {children}
+        <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -95,7 +95,7 @@ export default function PersonasPage() {
   }
 
   return (
-    <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
+    <>
       <PageHeader
         title="Personas"
         subTitle=""
@@ -140,6 +140,6 @@ export default function PersonasPage() {
           onAdd={handleAdd}
         />
       )}
-    </div>
+    </>
   );
 }

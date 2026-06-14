@@ -181,6 +181,7 @@ export default function ProjectsPage() {
 
   const visible =
     filter === "all" ? projects : projects.filter((p) => p.Status === filter);
+
   const counts = {
     active: projects?.filter((p) => p.Status === "active")?.length || 0,
     idle: projects?.filter((p) => p.Status === "idle")?.length || 0,
@@ -189,7 +190,7 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
+      <>
         {/* Header */}
         <PageHeader
           title="Project"
@@ -301,7 +302,7 @@ export default function ProjectsPage() {
           availablePages={availablePages}
           setPage={setPage}
         />
-      </div>
+      </>
 
       {showModal && (
         <AddProjectModal
