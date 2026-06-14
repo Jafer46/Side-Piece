@@ -13,6 +13,8 @@ export function DeleteProject(arg1:number):Promise<void>;
 
 export function GetAllPersonas():Promise<Array<models.Persona>>;
 
+export function GetAllRepos():Promise<Array<models.DiscoveredRepos>>;
+
 export function GetProjects():Promise<Array<models.Project>>;
 
 export function ScanAndCache():Promise<Array<git.ScanResult>>;

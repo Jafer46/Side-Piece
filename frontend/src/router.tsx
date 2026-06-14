@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import ProjectsPage from "./pages/ProjectPage";
 import PersonasPage from "./pages/PersonaPage";
 import App from "./App";
+import ReposPage from "./pages/ReposPage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "personas",
         Component: PersonasPage,
+      },
+      {
+        path: "repos",
+        Component: ReposPage,
       },
     ],
   },

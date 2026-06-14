@@ -66,6 +66,10 @@ func (a *App) DeletePersona(id uint) error {
     return db.DeletePersona(a.db, id)
 }
 
+func (a *App) GetAllRepos() ([]models.DiscoveredRepos, error) {
+    return db.GetAllRepos(a.db)
+}
+
 func (a *App) ScanAndCache() ([]git.ScanResult, error) {
     results, err := git.ScanForRepos()
     if err != nil {

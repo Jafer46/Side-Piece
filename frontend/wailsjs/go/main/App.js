@@ -22,6 +22,10 @@ export function GetAllPersonas() {
   return window['go']['main']['App']['GetAllPersonas']();
 }
 
+export function GetAllRepos() {
+  return window['go']['main']['App']['GetAllRepos']();
+}
+
 export function GetProjects() {
   return window['go']['main']['App']['GetProjects']();
 }
