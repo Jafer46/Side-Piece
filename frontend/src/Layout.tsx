@@ -6,11 +6,12 @@ import { useState } from "react";
 const routes = [
   { path: "/", name: "Projects" },
   { path: "/personas", name: "Personas" },
+  { path: "/repos", name: "Repos" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div
       style={{
@@ -103,6 +104,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           fontFamily: "IBM Plex Sans, sans-serif",
           position: "relative",
           width: "100%",
+        }}
+        onClick={() => {
+          if (open) {
+            setOpen(false);
+          }
         }}
       >
         <div style={{ padding: 32, maxWidth: 900, margin: "0 auto" }}>
