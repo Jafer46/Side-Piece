@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AddPersona } from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
 import COLORS from "../../constants/colors";
+import EmojiPicker from "emoji-picker-react";
 
 const inputStyle = {
   width: "100%",
@@ -37,6 +38,7 @@ export default function AddPersonaModal({
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [focused, setFocused] = useState<Boolean>(false);
 
   async function handleSave() {
     if (!name.trim() || !gender.trim()) {
@@ -129,12 +131,28 @@ export default function AddPersonaModal({
           </select>
         </FormField>
         <FormField label="Persona Emoji">
-          <input
-            value={emoji}
-            onChange={(e) => setEmoji(e.target.value)}
-            placeholder="👩"
-            style={inputStyle}
-          />
+          <div
+            tabIndex={-1}
+            onFocus={() => setFocused(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget)) {
+                setFocused(false);
+              }
+            }}
+          >
+            <input value={emoji} placeholder="👩" style={inputStyle} />
+
+            {focused && (
+              <EmojiPicker
+                onEmojiClick={(e) => {
+                  setEmoji(e.emoji);
+                }}
+                style={{
+                  position: "fixed",
+                }}
+              />
+            )}
+          </div>
         </FormField>
         <FormField label="Persona Description">
           <textarea

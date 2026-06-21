@@ -82,6 +82,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   backgroundColor:
                     location.pathname === route.path ? "#ff4757" : "",
                   fontFamily: "IBM Plex Mono, monospace",
+                  textAlign: "left",
                 }}
               >
                 {route.name}
