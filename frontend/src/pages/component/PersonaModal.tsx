@@ -36,6 +36,7 @@ export default function AddPersonaModal({
   const [color, setColor] = useState(PersonaColors[0]);
   const [emoji, setEmoji] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [focused, setFocused] = useState<Boolean>(false);
@@ -153,6 +154,19 @@ export default function AddPersonaModal({
               />
             )}
           </div>
+        </FormField>
+        <FormField label="Image">
+          <input
+            type="file"
+            accept="image/*"
+            style={inputStyle}
+            onChange={(e) => {
+              if (e.target.files?.length) {
+                setImage(e.target.files[0]);
+              }
+              setImage(null);
+            }}
+          />
         </FormField>
         <FormField label="Persona Description">
           <textarea
