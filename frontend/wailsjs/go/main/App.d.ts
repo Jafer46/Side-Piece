@@ -5,15 +5,23 @@ import {git} from '../models';
 
 export function AddPersona(arg1:string,arg2:string):Promise<models.Persona>;
 
+export function AddPersonaMessages(arg1:number,arg2:string,arg3:string,arg4:string):Promise<models.PersonaMessages>;
+
 export function AddProject(arg1:string,arg2:string,arg3:string,arg4:number,arg5:number):Promise<models.Project>;
 
 export function DeletePersona(arg1:number):Promise<void>;
 
+export function DeletePersonaMessages(arg1:number):Promise<void>;
+
 export function DeleteProject(arg1:number):Promise<void>;
+
+export function GetAllPersonaMessages():Promise<Array<models.PersonaMessages>>;
 
 export function GetAllPersonas():Promise<Array<models.Persona>>;
 
 export function GetAllRepos():Promise<Array<models.DiscoveredRepos>>;
+
+export function GetMessagesByPerson(arg1:number):Promise<Array<models.PersonaMessages>>;
 
 export function GetProjects():Promise<Array<models.Project>>;
 

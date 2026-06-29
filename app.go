@@ -66,6 +66,32 @@ func (a *App) DeletePersona(id uint) error {
     return db.DeletePersona(a.db, id)
 }
 
+func (a *App) GetAllPersonaMessages()([]models.PersonaMessages,error){
+    return db.GetAllPersonaMessages(a.db)
+}
+
+func (a *App) GetMessagesByPerson(personID uint)([]models.PersonaMessages, error){
+    return db.GetMessagesByPersona(a.db, personID)
+}
+
+func (a *App) AddPersonaMessages(
+    personaID uint, 
+    message string, 
+    messageType string,
+    character string,
+)(models.PersonaMessages, error) {
+    return db.AddPersonaMessages(a.db, models.PersonaMessages{
+        PersonaID: personaID,
+        Message: message,
+        MessageType: messageType,
+        Character: character,
+    })
+}
+
+func (a *App) DeletePersonaMessages(id uint) error {
+    return db.DeletePersonaMessages(a.db, id)
+}
+
 func (a *App) GetAllRepos() ([]models.DiscoveredRepos, error) {
     return db.GetAllRepos(a.db)
 }

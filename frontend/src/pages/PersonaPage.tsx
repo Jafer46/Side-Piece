@@ -9,9 +9,11 @@ import PageHeader from "./component/PageHeader";
 
 function PersonaCard({
   persona,
+  onShow,
   onDelete,
 }: {
   persona: models.Persona;
+  onShow: (id: number) => void;
   onDelete: (id: number) => void;
 }) {
   return (
@@ -63,6 +65,12 @@ function PersonaCard({
 
       <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
         <ActionButton
+          onClick={() => onShow(persona.ID)}
+          hoverColor={COLORS.WARNING}
+        >
+          Show
+        </ActionButton>
+        <ActionButton
           onClick={() => onDelete(persona.ID)}
           hoverColor={COLORS.DANGER}
         >
@@ -93,6 +101,8 @@ export default function PersonasPage() {
   function handleDelete(id: number) {
     setPersonas((prev) => prev.filter((p) => p.ID !== id));
   }
+
+  function handleShow(id: number) {}
 
   return (
     <>
@@ -130,7 +140,12 @@ export default function PersonasPage() {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {personas.map((p) => (
-            <PersonaCard key={p.ID} persona={p} onDelete={handleDelete} />
+            <PersonaCard
+              key={p.ID}
+              persona={p}
+              onShow={handleShow}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       )}
