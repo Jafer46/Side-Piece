@@ -15,7 +15,8 @@ type Project struct {
     LastNagAt      *time.Time 
     NagIntervalHours int
 	PersonaID 		uint      
-	Persona 		Persona `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`    
+	Persona 		Persona `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"` 
+	SnoozedUntil   *time.Time       
 }
 
 type ProjectCommit struct {
@@ -58,7 +59,8 @@ type CronLog struct {
 	gorm.Model   
 	JobName   string    
 	Status    string    
-	RanAt    time.Time  
+	RanAt    time.Time
+	Note      string  
 }
 
 type DiscoveredRepos struct {

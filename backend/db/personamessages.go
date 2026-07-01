@@ -1,7 +1,7 @@
 package db
 
 import (
-	"side_piece/db/models"
+	"side_piece/backend/db/models"
 
 	"gorm.io/gorm"
 )

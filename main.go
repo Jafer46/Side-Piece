@@ -2,7 +2,7 @@ package main
 
 import (
 	"embed"
-	"side_piece/db/models"
+	"side_piece/backend/db/models"
 
 	"os"
 	"path/filepath"

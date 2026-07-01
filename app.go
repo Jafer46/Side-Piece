@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
-	"side_piece/db"
-	"side_piece/db/models"
-	"side_piece/git"
+	"side_piece/backend/db"
+	"side_piece/backend/db/models"
+	"side_piece/backend/git"
+	"side_piece/backend/scheduler"
 
 	"gorm.io/gorm"
 )
@@ -13,17 +14,34 @@ import (
 type App struct {
     ctx context.Context
     db  *gorm.DB
+    scheduler *scheduler.Scheduler
 }
 
 // NewApp creates a new App application struct
 func NewApp(database *gorm.DB) *App {
-	return &App{db: database}
+    app := &App{db: database}
+
+    app.scheduler = scheduler.New(database, func(project models.Project, reason string) {
+        // notifications.Send(project, reason)
+
+    })
+	return app
 }
 
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+
+     // Check for missed nags first (PC was off)
+    a.scheduler.CheckMissedJobs()
+
+    // Then start the ongoing cron
+    a.scheduler.Start()
+}
+
+func (a *App) shutdown(ctx context.Context) {
+    a.scheduler.Stop()
 }
 
 // --- Projects ---
