@@ -186,6 +186,8 @@ export namespace models {
 	    NagIntervalHours: number;
 	    PersonaID: number;
 	    Persona: Persona;
+	    // Go type: time
+	    SnoozedUntil?: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new Project(source);
@@ -205,6 +207,7 @@ export namespace models {
 	        this.NagIntervalHours = source["NagIntervalHours"];
 	        this.PersonaID = source["PersonaID"];
 	        this.Persona = this.convertValues(source["Persona"], Persona);
+	        this.SnoozedUntil = this.convertValues(source["SnoozedUntil"], null);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

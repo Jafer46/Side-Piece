@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { AddProject, GetAllPersonas } from "../../../wailsjs/go/main/App";
+import {
+  AddProject,
+  GetAllPersonas,
+  GetAllRepos,
+} from "../../../wailsjs/go/main/App";
 import FormField from "./FormField";
 import { models } from "../../../wailsjs/go/models";
 import COLORS from "../../constants/colors";
@@ -32,11 +36,13 @@ export default function AddProjectModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [personas, setPersonas] = useState<models.Persona[]>([]);
+  const [repos, setRepos] = useState<models.DiscoveredRepos[]>([]);
   const [loadingPersonas, setLoadingPersonas] = useState(false);
 
   useEffect(() => {
     setLoadingPersonas(true);
     GetAllPersonas().then(setPersonas).catch(console.error);
+    GetAllRepos().then(setRepos).catch(console.error);
     setLoadingPersonas(false);
   }, []);
 
@@ -118,12 +124,17 @@ export default function AddProjectModal({
         </FormField>
 
         <FormField label="Local path">
-          <input
+          <select
             value={path}
             onChange={(e) => setPath(e.target.value)}
-            placeholder="C:\Users\you\projects\my-saas"
             style={inputStyle}
-          />
+          >
+            {repos.map((repo) => (
+              <option key={repo.Path} value={repo.Path}>
+                {repo.Name}
+              </option>
+            ))}
+          </select>
         </FormField>
 
         <FormField label="Nag every">
