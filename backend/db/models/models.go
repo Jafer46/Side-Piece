@@ -72,3 +72,10 @@ type DiscoveredRepos struct {
 	Branch    string    
 	LastCommit string    
 }
+
+type SeverityLevel struct {
+    Level        string  // "mild" | "serious" | "abandoned"
+    HoursMissed  float64
+    CommitsMissed int
+    Label        string  // human readable e.g. "3 days without a commit"
+}
