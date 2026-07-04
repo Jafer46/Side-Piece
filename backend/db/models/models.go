@@ -43,7 +43,9 @@ type PersonaMessages struct {
 	Persona   	Persona `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`     
 	Message   	string    
 	MessageType string    
-	Character 	string    
+	Character 	string
+	IsDefault   bool
+	ImagePath   string
 }
 
 type NotificationLog struct {

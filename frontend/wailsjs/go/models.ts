@@ -132,6 +132,8 @@ export namespace models {
 	    Message: string;
 	    MessageType: string;
 	    Character: string;
+	    IsDefault: boolean;
+	    ImagePath: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new PersonaMessages(source);
@@ -148,6 +150,8 @@ export namespace models {
 	        this.Message = source["Message"];
 	        this.MessageType = source["MessageType"];
 	        this.Character = source["Character"];
+	        this.IsDefault = source["IsDefault"];
+	        this.ImagePath = source["ImagePath"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
