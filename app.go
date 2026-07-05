@@ -24,7 +24,7 @@ func NewApp(database *gorm.DB) *App {
 
     app.scheduler = scheduler.New(database, func(project models.Project, reason string) {
         notifications.Send(database, project, models.SeverityLevel{
-            
+
         })
 
     })

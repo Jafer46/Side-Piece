@@ -2,7 +2,9 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"side_piece/backend/db/models"
+	notifications "side_piece/backend/notification"
 
 	"os"
 	"path/filepath"
@@ -30,6 +32,11 @@ func main() {
 		&models.Project{}, &models.Persona{}, 
 		&models.DiscoveredRepos{}, &models.ProjectCommit{}, 
 		&models.CronLog{}, &models.PersonaMessages{})
+	
+	// Seed default personas + messages on first run
+    if err := notifications.SeedDefaultPersonas(database); err != nil {
+        panic(fmt.Errorf("failed to seed personas: %w", err))
+    }
     
 
 	
