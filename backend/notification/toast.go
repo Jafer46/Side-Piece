@@ -46,3 +46,8 @@ func Send(db *gorm.DB, project models.Project, severity models.SeverityLevel) {
 
     logNotification(db, project, rendered, severity.Level, "sent")
 }
+
+
+func logNotification(db *gorm.DB,project models.Project,rendered string,severityLevel string, status string){
+	
+}

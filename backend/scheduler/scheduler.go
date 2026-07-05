@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"side_piece/backend/db/models"
+	"side_piece/backend/git"
 	"time"
 
 	"github.com/robfig/cron/v3"
@@ -84,7 +85,12 @@ func (s *Scheduler) evaluateProject(p models.Project, trigger string) string {
         log.Printf("[%s] snoozed until %s — skipping", p.Name, p.SnoozedUntil.Format("15:04"))
         return "skipped"
     }
-
+    updated, err := git.UpdateLastCommit(s.db,p)
+    if err != nil {
+        log.Printf("[%s] could not refresh commit date: %v", p.Name, err)
+    } else {
+        p = updated // use the fresh data for all checks below
+    }
     // 2. Calculate hours since last activity
     hoursSinceCommit := s.hoursSinceLastCommit(p)
     threshold := float64(p.NagIntervalHours)

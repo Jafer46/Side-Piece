@@ -1,8 +1,14 @@
 package git
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"side_piece/backend/db/models"
+	"time"
+
+	gogit "github.com/go-git/go-git/v5"
+	"gorm.io/gorm"
 )
 
 // ScanForRepos walks common dev directories and finds all git repos
@@ -51,6 +57,67 @@ func ScanForRepos() ([]ScanResult, error) {
     }
 
     return results, nil
+}
+
+// git/git.go
+
+func UpdateLastCommit(db *gorm.DB, project models.Project) (models.Project, error) {
+    // 1. Open the repo at the project's path
+    repo, err := gogit.PlainOpen(project.Path)
+    if err != nil {
+        return project, fmt.Errorf("could not open repo at %s: %w", project.Path, err)
+    }
+
+    // 2. Get HEAD
+    ref, err := repo.Head()
+    if err != nil {
+        return project, fmt.Errorf("could not get HEAD for %s: %w", project.Name, err)
+    }
+
+    // 3. Get the latest commit
+    commit, err := repo.CommitObject(ref.Hash())
+    if err != nil {
+        return project, fmt.Errorf("could not get commit for %s: %w", project.Name, err)
+    }
+
+    // 4. Update the DB
+    commitTime := commit.Author.When
+
+    status := getStats(commitTime, project)
+
+
+    result := db.Model(&project).UpdateColumns(models.Project{
+        Status: status,
+        LastCommitAt: &commitTime,
+    })
+
+    if result.Error != nil {
+        return project, fmt.Errorf("could not update last_commit_at for %s: %w", project.Name, result.Error)
+    }
+
+
+    // 5. Return the updated project
+    project.LastCommitAt = &commitTime
+    return project, nil
+}
+
+func getStats(commitTime time.Time, project models.Project)(string){
+    now := time.Now()
+
+    if project.SnoozedUntil != nil && now.Before(*project.SnoozedUntil) {
+        return "paused"
+    }
+    hours := time.Since(commitTime).Hours()
+    
+    if (hours < float64(project.NagIntervalHours)){
+        return "active"
+    } 
+    
+    if(hours < float64(project.NagIntervalHours)*2){
+        return "idle"
+    }
+
+    return "abandoned"
 }
 
 

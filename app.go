@@ -5,6 +5,7 @@ import (
 	"side_piece/backend/db"
 	"side_piece/backend/db/models"
 	"side_piece/backend/git"
+	notifications "side_piece/backend/notification"
 	"side_piece/backend/scheduler"
 
 	"gorm.io/gorm"
@@ -22,7 +23,9 @@ func NewApp(database *gorm.DB) *App {
     app := &App{db: database}
 
     app.scheduler = scheduler.New(database, func(project models.Project, reason string) {
-        // notifications.Send(project, reason)
+        notifications.Send(database, project, models.SeverityLevel{
+            
+        })
 
     })
 	return app
