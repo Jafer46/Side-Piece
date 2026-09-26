@@ -31,6 +31,11 @@ func NewApp(database *gorm.DB) *App {
 	return app
 }
 
+
+func (a *App) saveImage(filename string, data []byte) (string, error) {
+    return notifications.SaveImage(filename, data)
+}
+
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {

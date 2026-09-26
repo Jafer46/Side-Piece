@@ -9,6 +9,8 @@ import (
 	"runtime"
 	"side_piece/backend/db/models"
 	"strings"
+
+	uuid "github.com/nu7hatch/gouuid"
 )
 
 // GetImageStorageDir returns where user-uploaded images are stored
@@ -62,6 +64,31 @@ func SaveUserImage(sourcePath string, personaName string, messageID uint) (strin
     }
 
     return destPath, nil
+}
+
+func SaveImage(sourcePath string, data []byte) (string, error) {
+    ext := filepath.Ext(sourcePath)
+    if !isValidImageExt(ext) {
+        return "", fmt.Errorf("unsupported image type: %s (use png, jpg, gif, webp)", ext)
+    }
+    dir := filepath.Join(GetImageStorageDir(), "defaults")
+
+    if err := os.MkdirAll(dir, 0755); err != nil {
+		return "", err
+	}
+    res , err := uuid.NewV4()
+    if err != nil {
+        return "", err
+    }
+    filename := res.String() + ext
+
+	path := filepath.Join(dir, filename)
+
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		return "", err
+	}
+
+	return path, nil
 }
 
 // DeleteUserImage removes a stored image
