@@ -105,12 +105,14 @@ func (a *App) AddPersonaMessages(
     message string, 
     messageType string,
     character string,
+    imagePath string,
 )(models.PersonaMessages, error) {
     return db.AddPersonaMessages(a.db, models.PersonaMessages{
         PersonaID: personaID,
         Message: message,
         MessageType: messageType,
         Character: character,
+        ImagePath: imagePath,
     })
 }
 

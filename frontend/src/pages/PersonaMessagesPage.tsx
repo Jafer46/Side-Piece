@@ -5,6 +5,7 @@ import { GetMessagesByPerson } from "../../wailsjs/go/main/App";
 import COLORS from "../constants/colors";
 import ActionButton from "./component/ActionButton";
 import PageHeader from "./component/PageHeader";
+import PersonaMessageModal from "./component/PersonaMessageModal";
 
 export default function PersonaMessagesPage({}) {
   const { pid } = useParams<{ pid: string }>();
@@ -22,6 +23,15 @@ export default function PersonaMessagesPage({}) {
   }, [pid]);
 
   function handleDelete(id: number) {}
+
+  function handleSave(data: models.PersonaMessages) {
+    if (messages.find((m) => m.ID === data.ID)) {
+      const index = messages.findIndex((m) => m.ID === data.ID);
+      messages[index] = data;
+    } else {
+      messages.push(data);
+    }
+  }
 
   return (
     <div>
@@ -53,6 +63,12 @@ export default function PersonaMessagesPage({}) {
             />
           </div>
         ))
+      )}
+      {showModal && (
+        <PersonaMessageModal
+          onClose={() => setShowModal(false)}
+          onAdd={handleSave}
+        />
       )}
     </div>
   );
