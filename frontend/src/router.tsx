@@ -3,6 +3,7 @@ import ProjectsPage from "./pages/ProjectPage";
 import PersonasPage from "./pages/PersonaPage";
 import App from "./App";
 import ReposPage from "./pages/ReposPage";
+import PersonaMessagesPage from "./pages/PersonaMessagesPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "personas",
         Component: PersonasPage,
+      },
+      {
+        path: "personas/messages/:pid",
+        Component: PersonaMessagesPage,
       },
       {
         path: "repos",

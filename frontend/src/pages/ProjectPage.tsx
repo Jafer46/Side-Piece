@@ -153,11 +153,11 @@ export default function ProjectsPage() {
   const [availablePages, setAvailablePages] = useState(1);
 
   useEffect(() => {
+    setLoading(true);
     GetProjects()
       .then(setProjects)
       .catch(console.error)
       .finally(() => setLoading(false));
-    console.log(projects);
   }, []);
 
   async function handleDelete(id: number) {

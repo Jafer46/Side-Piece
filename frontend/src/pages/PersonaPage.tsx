@@ -6,6 +6,7 @@ import ActionButton from "./component/ActionButton";
 import AddPersonaModal from "./component/PersonaModal";
 import COLORS from "../constants/colors";
 import PageHeader from "./component/PageHeader";
+import { Navigator, useNavigate } from "react-router";
 
 function PersonaCard({
   persona,
@@ -16,50 +17,111 @@ function PersonaCard({
   onShow: (id: number) => void;
   onDelete: (id: number) => void;
 }) {
+  const color = persona.Color || COLORS.MUTED;
+  const messageCount = persona.Messages?.length ?? 0;
+
   return (
     <div
       style={{
         background: COLORS.BACKGROUND,
         border: `0.5px solid ${COLORS.DARK}`,
         borderRadius: 10,
-        padding: "18px 20px",
+        padding: "16px 20px",
         display: "flex",
         alignItems: "center",
         gap: 16,
-        transition: "border-color .15s",
+        transition: "border-color .15s, background .15s",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#3e3e4e")}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#2e2e38")}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "#3e3e4e";
+        e.currentTarget.style.background = "#1a1a20";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = COLORS.DARK;
+        e.currentTarget.style.background = COLORS.BACKGROUND;
+      }}
     >
+      {/* Avatar */}
+      <div
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          background: `${color}18`,
+          border: `0.5px solid ${color}`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 20,
+          flexShrink: 0,
+        }}
+      >
+        {persona.Emoji || "🙂"}
+      </div>
+
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            fontSize: 14,
-            fontWeight: 500,
-            color: COLORS.FOREGROUND,
-            marginBottom: 3,
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            maxWidth: 380,
-            textAlign: "left",
-          }}
-        >
-          {persona.Name}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: COLORS.FOREGROUND,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              maxWidth: 260,
+            }}
+          >
+            {persona.Name}
+          </span>
+          <span
+            style={{
+              fontFamily: "IBM Plex Mono, monospace",
+              fontSize: 10,
+              padding: "2px 7px",
+              borderRadius: 3,
+              border: `0.5px solid ${color}`,
+              color,
+              background: `${color}18`,
+              letterSpacing: ".04em",
+              textTransform: "capitalize",
+              flexShrink: 0,
+            }}
+          >
+            {persona.Gender}
+          </span>
         </div>
+
         <div
           style={{
-            fontFamily: "IBM Plex Mono, monospace",
-            fontSize: 11,
+            fontSize: 12,
             color: COLORS.MUTED,
+            marginTop: 4,
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            maxWidth: 380,
+            maxWidth: 420,
+            fontWeight: 300,
             textAlign: "left",
           }}
         >
-          {persona.Gender}
+          {persona.Description || "No description yet."}
+        </div>
+
+        <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+          <span
+            style={{
+              fontFamily: "IBM Plex Mono, monospace",
+              fontSize: 10,
+              padding: "3px 8px",
+              borderRadius: 3,
+              border: `0.5px solid ${COLORS.DARK}`,
+              color: COLORS.MUTED,
+              letterSpacing: ".04em",
+            }}
+          >
+            {messageCount} message{messageCount !== 1 ? "s" : ""}
+          </span>
         </div>
       </div>
 
@@ -85,6 +147,7 @@ export default function PersonasPage() {
   const [personas, setPersonas] = useState<models.Persona[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
   const [showModal, setShowModal] = useState<Boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -102,7 +165,9 @@ export default function PersonasPage() {
     setPersonas((prev) => prev.filter((p) => p.ID !== id));
   }
 
-  function handleShow(id: number) {}
+  function handleShow(id: number) {
+    navigate(`/personas/messages/${id}`);
+  }
 
   return (
     <>

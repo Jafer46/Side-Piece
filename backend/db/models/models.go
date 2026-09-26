@@ -34,7 +34,8 @@ type Persona struct {
 	Gender 	    string    
 	Color       string    
 	Emoji       string    
-	Description string    
+	Description string
+	Messages    []PersonaMessages    
 }
 
 type PersonaMessages struct {

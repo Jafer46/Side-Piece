@@ -1,3 +1,4 @@
+import React from "react";
 import COLORS from "../../constants/colors";
 
 export default function PageHeader({
@@ -6,7 +7,7 @@ export default function PageHeader({
   description,
   setShowModal,
 }: {
-  title: string;
+  title: React.ReactNode;
   subTitle?: string;
   description?: string;
   setShowModal: (show: boolean) => void;
@@ -52,6 +53,7 @@ export default function PageHeader({
             color: COLORS.LIGHT,
             marginTop: 4,
             fontWeight: 300,
+            textAlign: "left",
           }}
         >
           {description || ""}
